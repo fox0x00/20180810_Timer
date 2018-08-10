@@ -13,6 +13,8 @@ namespace _20180810_Timer
 {
 	public class VM_TIME : INotifyPropertyChanged, ICommand
 	{
+		private object loc = new object();
+
 		public VM_TIME()
 		{
 			this.m_Text.Add("");
@@ -35,7 +37,7 @@ namespace _20180810_Timer
 		}
 
 		private M_TIME m_time;
-		public M_TIME M_M_TIME
+		public M_TIME M_MODEL
 		{
 			get
 			{
@@ -46,6 +48,43 @@ namespace _20180810_Timer
 				if (value != this.m_time)
 				{
 					this.m_time = value;
+				}
+			}
+		}
+
+		private TIMEDISPLAY m_view;
+		public TIMEDISPLAY VIEW
+		{
+			get
+			{
+				return this.m_view;
+			}
+			set
+			{
+				if (value != this.m_view)
+				{
+					this.m_view = value;
+					value.DataContext = this;
+				}
+			}
+		}
+
+		private bool m_IsTOP;
+		public bool IsTOP
+		{
+			get
+			{
+				return this.m_IsTOP;
+			}
+			set
+			{
+				if (value != this.m_IsTOP)
+				{
+					this.m_IsTOP = value;
+					if (VIEW != null)
+					{
+						VIEW.Topmost = value;
+					}
 				}
 			}
 		}
@@ -64,7 +103,10 @@ namespace _20180810_Timer
 		{
 			get
 			{
-				return this.m_Number;
+				lock (loc)
+				{
+					return this.m_Number;
+				}
 			}
 		}
 
@@ -80,6 +122,39 @@ namespace _20180810_Timer
 			return ret;
 		}
 
+		private void addhour()
+		{
+			int hour, day, month, year;
+
+			lock (loc)
+			{
+				hour = StrtoNum(this.Number[3], DateTime.Now.Hour) + 1;
+				if (23 < hour)
+				{
+					hour = 0;
+
+					day = StrtoNum(this.Number[2], DateTime.Now.Day) + 1;
+					month = StrtoNum(this.Number[1], DateTime.Now.Month);
+					year = StrtoNum(this.Number[0], DateTime.Now.Year);
+
+					if (DateTime.DaysInMonth(year, month) < day)
+					{
+						day = 1;
+						month = month + 1;
+						if (12 < month)
+						{
+							month = 1;
+							year = year + 1;
+							Number[0] = year.ToString();
+						}
+						Number[1] = month.ToString();
+					}
+					Number[2] = day.ToString();
+				}
+				Number[3] = hour.ToString();
+			}
+		}
+
 
 
 		public bool CanExecute(object parameter)
@@ -92,7 +167,7 @@ namespace _20180810_Timer
 			switch ((String)parameter)
 			{
 				case "ADDHOUR":
-					Number[3] = (StrtoNum(this.Number[3], DateTime.Now.Hour) + 1).ToString();
+					this.addhour();
 					break;
 				default:
 					break;

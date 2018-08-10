@@ -20,10 +20,10 @@ namespace _20180810_Timer
 
 		App()
         {
-            m_vt.M_M_TIME = m_mt;
+            m_vt.M_MODEL = m_mt;
             m_mt.M_VM_TIME = m_vt;
 
-			m_vt.M_M_TIME.work_start();
+			m_vt.M_MODEL.work_start();
 		}
 
 		~App()

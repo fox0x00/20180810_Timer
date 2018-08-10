@@ -61,7 +61,7 @@ namespace _20180810_Timer
 
 		private void work()
 		{
-			DateTime time1, time2, time4;
+			DateTime time1, time2;
 			TimeSpan time3;
 
 			time1 = DateTime.Now;

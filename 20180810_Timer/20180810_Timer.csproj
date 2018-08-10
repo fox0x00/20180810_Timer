@@ -56,7 +56,7 @@
     </ApplicationDefinition>
     <Compile Include="M_TIME.cs" />
     <Compile Include="VM_TIME.cs" />
-    <Page Include="MainWindow.xaml">
+    <Page Include="TIMEDISPLAY.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -64,8 +64,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="TIMEDISPLAY.xaml.cs">
+      <DependentUpon>TIMEDISPLAY.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

@@ -18,18 +18,18 @@ namespace _20180810_Timer
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class TIMEDISPLAY : Window
     {
-        public MainWindow()
+        public TIMEDISPLAY()
         {
             InitializeComponent();
 
-            this.DataContext = ((App)App.Current).TIME;
-        }
+			((App)App.Current).TIME.VIEW = this;
+		}
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			((App)App.Current).TIME.M_M_TIME.Close();
+			((App)App.Current).TIME.M_MODEL.Close();
 		}
 	}
 }
